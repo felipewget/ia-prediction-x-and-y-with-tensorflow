@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.6"></script>
+
+        <script>
+            
+            let sample = [
+                {
+                    day: 1,
+                    price: 1.99,
+                },
+                {
+                    day: 2,
+                    price: 2.99,
+                },
+                {
+                    day: 3,
+                    price: 3.99,
+                },
+                {
+                    day: 4,
+                    price: 4.99,
+                },
+                {
+                    day: 5,
+                    price: 5.99,
+                },
+                {
+                    day: 6,
+                    price: 6.99,
+                },
+            ];
+
+        </script>
+    </head>
+
+    <body>
+        <div id="response"></div>
+        <button onClick="hadleClickPrediction( sample )" >Click aki to predition</button>
+        <script src="index.js"></script>
+    </body>
+</html>
