@@ -1,57 +1,67 @@
-async function learnLinear( sample, num_of_steps = 1 )
-{
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.6"></script>
 
-    let xs;
-    let ys;
-    let x           = [];
-    let y           = [];
-    let predictTime = sample.length;
-    let model       = tf.sequential();
+        <script>
 
-    sample = await sample.map( ( obj ) => {
+            let sample = [
+                {
+                    day: 1,
+                    price: 1.99,
+                },
+                {
+                    day: 2,
+                    price: 2.99,
+                },
+                {
+                    day: 3,
+                    price: 3.99,
+                },
+                {
+                    day: 4,
+                    price: 4.99,
+                },
+                {
+                    day: 5,
+                    price: 5.99,
+                },
+                {
+                    day: 6,
+                    price: 6.99,
+                },
+            ];
 
-        return {
-            y: obj.price,
-            x: obj.day
-        }
+            let sample_classify = [
+              [10,-15,-30,-45,-20,  0],
+              [10,-25,-33,-22,5,    0],
+              [5,-15,-32,-45,15,    0],
+              [1,2,3,4,5,        1],
+              [1,2,3,4,5,        1],
+              [5,6,7,8,9,        1],
+              [5,-5,13,15,15,       2],
+              [-5,-14,-17,-31,-18,  2],
+              [-5,-15,-16,-20,22,   2],
+            ];
 
-    });
+            let legends_classify = [
+              'imagem_tipo_1',
+              'imagem_tipo_2',
+              'imagem_tipo_3',
+            ]
 
-    for( let i in sample ){
+            let percent_to_test = .2; // and 0.8 is to train
+            let epoch = 100;
 
-        y.push( sample[i].y );
-        x.push( sample[i].x );
+            let input = [1,2,3,4,5];
 
-    }
-    
-    model.add( tf.layers.dense({ units: 1, inputShape: [1]}) )
+        </script>
+    </head>
 
-    model.compile({
-        loss: "meanSquaredError",
-        optimizer: "sgd"
-    });
-
-    xs = tf.tensor2d( x, [ x.length, 1 ] );
-    ys = tf.tensor2d( y, [ y.length, 1 ] );
-    
-    await model.fit( xs, ys, {epochs: 600 });
-
-    predictTime = num_of_steps + predictTime;
-
-    let response = await model.predict( tf.tensor2d([predictTime], [1,1]) );
-
-    return response;
-
-}
-
-function hadleClickPrediction( sample )
-{
-
-    learnLinear( sample ).then( function( response ){
-
-        document.getElementById("response").innerText = response.get(0,0);
-        console.log( response.get(0,0) );
-    
-    })
-
-}
+    <body>
+        <div id="response"></div>
+        <button onClick="hadleClickPrediction( sample )" >Click aki to predition</button>
+        <button onClick="hadleClickClassify( input, sample_classify, percent_to_test, epoch, legends_classify )" >Click aki to classifique</button>
+        <script src="index.js"></script>
+    </body>
+</html>
